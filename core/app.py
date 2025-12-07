@@ -106,3 +106,4 @@ class App:
             if frame_count % 300 == 0:  # Log every 300 frames (~10 seconds at 30fps)
                 logger.debug(f"Frame {frame_count}, last frame time: {frame_time}ms")
 
+

@@ -11,6 +11,19 @@ class Ft6x36:
     P1_XH_REG  = 0x03
     
     def __init__( self, i2c, ax=1, bx=0, ay=1, by=0, swap_xy=False ):
+        """
+        Inicializa el controlador táctil FT6x36.
+        
+        Para modo vertical (320x480):
+        - swap_xy=False (ya que la orientación cambia)
+        - Los coeficientes ax, bx, ay, by ajustan la calibración
+        
+        La transformación aplicada es:
+        x_final = ax * x_raw + bx
+        y_final = ay * y_raw + by
+        
+        Si swap_xy=True, primero se intercambian x e y antes de la transformación.
+        """
         logger.debug("Initializing FT6x36 touch controller...")
         self.i2c = i2c
         self.ax = ax

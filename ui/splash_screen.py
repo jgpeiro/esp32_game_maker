@@ -37,8 +37,8 @@ class SplashScreen(Screen):
         # Fondo
         r.fill(config.COLOR_BACKGROUND)
         
-        # Círculos concéntricos animados
-        cx, cy = 240, 100
+        # Círculos concéntricos animados (centrado en pantalla vertical 320x480)
+        cx, cy = 160, 140
         
         # Círculo exterior
         r.circle(cx, cy, 50, config.COLOR_PRIMARY, fill=False)
@@ -50,23 +50,23 @@ class SplashScreen(Screen):
         r.circle(cx, cy, 30, config.COLOR_ACCENT, fill=False)
         
         # Texto principal
-        r.text_centered(145, "GAME", config.COLOR_PRIMARY, scale=3)
-        r.text_centered(170, "MAKER", config.COLOR_SECONDARY, scale=2)
+        r.text_centered(195, "GAME", config.COLOR_PRIMARY, scale=3)
+        r.text_centered(230, "MAKER", config.COLOR_SECONDARY, scale=2)
         
-        # Estrellas decorativas (posiciones fijas)
-        stars = [(50, 50), (430, 70), (70, 200)]
+        # Estrellas decorativas (posiciones ajustadas para vertical)
+        stars = [(50, 80), (260, 100), (70, 290)]
         for sx, sy in stars:
             self._draw_star(sx, sy, 6, config.COLOR_WARNING)
         
         # Barra de progreso
-        bar_x, bar_y = 140, 230
+        bar_x, bar_y = 60, 330
         bar_w, bar_h = 200, 12
         r.progress_bar(bar_x, bar_y, bar_w, bar_h, self.progress, 
                       config.COLOR_BUTTON_BG, config.COLOR_PRIMARY)
         
         # Texto inferior
-        r.text_centered(260, "Powered by Claude AI", config.COLOR_TEXT_SECONDARY)
-        r.text_centered(275, "v1.0 - ESP32-S3", config.COLOR_TEXT_SECONDARY)
+        r.text_centered(370, "Powered by Claude AI", config.COLOR_TEXT_SECONDARY)
+        r.text_centered(390, "v1.0 - ESP32-S3", config.COLOR_TEXT_SECONDARY)
         
         r.flush()
     

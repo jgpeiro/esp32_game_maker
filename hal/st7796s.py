@@ -5,8 +5,8 @@ import lib.logging as logging
 logger = logging.getLogger("st7796s")
 
 class St7796s:
-    WIDTH = 480
-    HEIGHT = 320
+    WIDTH = 320
+    HEIGHT = 480
 
     CASET = 0x2A
     RASET = 0x2B
@@ -60,7 +60,7 @@ class St7796s:
         time.sleep_ms( 100 )
         self.write_reg( 0x11, b"" )
         time.sleep_ms( 10 )
-        self.write_reg( 0x36, b"\xF8" ) # b"\xF0" ) #b"\x70" )
+        self.write_reg( 0x36, b"\x48" )  # Portrait mode (vertical) MADCTL
         self.write_reg( 0x3A, b"\x05" )
         self.write_reg( 0xB2, b"\x0C\x0C\x00\x33\x33"  )
         self.write_reg( 0xB7, b"\x35" )

@@ -16,7 +16,8 @@ class GameRunner(Screen):
         self.paused = False
         self.error = None
         
-        self.pause_btn = Button(420, 5, 50, 30, "||", config.COLOR_WHITE, config.COLOR_ACCENT)
+        # Botón pausa ajustado para pantalla vertical (320x480)
+        self.pause_btn = Button(260, 5, 50, 30, "||", config.COLOR_WHITE, config.COLOR_ACCENT)
         logger.debug(f"GameRunner initialized for: {game_filename}")
     
     def enter(self):
@@ -82,27 +83,27 @@ class GameRunner(Screen):
         r = self.renderer
         
         if self.error:
-            # Muestra error
+            # Muestra error (ajustado para pantalla vertical 320x480)
             logger.debug("Drawing error screen")
             r.fill(config.COLOR_BACKGROUND)
-            r.text_centered(140, "ERROR", config.COLOR_ACCENT, scale=3)
-            r.text_centered(180, self.error[:50], config.COLOR_TEXT_SECONDARY, scale=1)
+            r.text_centered(200, "ERROR", config.COLOR_ACCENT, scale=3)
+            r.text_centered(250, self.error[:40], config.COLOR_TEXT_SECONDARY, scale=1)
             
-            btn = Button(170, 230, 140, 35, "Volver", config.COLOR_WHITE, config.COLOR_PRIMARY)
+            btn = Button(90, 320, 140, 35, "Volver", config.COLOR_WHITE, config.COLOR_PRIMARY)
             btn.draw(r)
             r.flush()
             
         elif self.paused:
-            # Overlay de pausa
+            # Overlay de pausa (ajustado para pantalla vertical)
             logger.debug("Drawing pause overlay")
             # Oscurece pantalla (dibuja rectángulos semi-transparentes simulados)
-            for i in range(0, 320, 4):
-                r.line(0, i, 480, i, 0x2945)
+            for i in range(0, 480, 4):
+                r.line(0, i, 320, i, 0x2945)
             
-            r.text_centered(140, "PAUSA", config.COLOR_PRIMARY, scale=3)
+            r.text_centered(200, "PAUSA", config.COLOR_PRIMARY, scale=3)
             
-            resume_btn = Button(120, 180, 110, 35, "Reanudar", config.COLOR_WHITE, config.COLOR_SUCCESS)
-            exit_btn = Button(250, 180, 110, 35, "Salir", config.COLOR_WHITE, config.COLOR_ACCENT)
+            resume_btn = Button(50, 280, 100, 35, "Reanudar", config.COLOR_WHITE, config.COLOR_SUCCESS)
+            exit_btn = Button(170, 280, 100, 35, "Salir", config.COLOR_WHITE, config.COLOR_ACCENT)
             
             resume_btn.draw(r)
             exit_btn.draw(r)
@@ -137,12 +138,12 @@ class GameRunner(Screen):
             return
         
         if self.paused:
-            # Botones de pausa
-            if 120 <= x <= 230 and 180 <= y <= 215:
+            # Botones de pausa (ajustados para pantalla vertical)
+            if 50 <= x <= 150 and 280 <= y <= 315:
                 # Reanudar
                 logger.info("Game resumed")
                 self.paused = False
-            elif 250 <= x <= 360 and 180 <= y <= 215:
+            elif 170 <= x <= 270 and 280 <= y <= 315:
                 # Salir
                 logger.info("Exiting game, returning to GamesScreen")
                 from games_screen import GamesScreen

@@ -19,18 +19,18 @@ class GeneratorScreen(Screen):
         self.selected_index = -1
         self.loading_suggestions = False
         
-        # Botones de navegación
-        self.back_btn = Button(20, 285, 70, 25, "Atras", config.COLOR_TEXT_SECONDARY, config.COLOR_BUTTON_BG)
-        self.next_btn = Button(390, 285, 70, 25, "Siguiente", config.COLOR_WHITE, config.COLOR_SUCCESS)
-        self.generate_btn = Button(170, 285, 140, 25, "GENERAR", config.COLOR_WHITE, config.COLOR_SUCCESS)
+        # Botones de navegación (ajustados para 320x480)
+        self.back_btn = Button(20, 430, 70, 25, "Atras", config.COLOR_TEXT_SECONDARY, config.COLOR_BUTTON_BG)
+        self.next_btn = Button(230, 430, 70, 25, "Siguiente", config.COLOR_WHITE, config.COLOR_SUCCESS)
+        self.generate_btn = Button(90, 430, 140, 25, "GENERAR", config.COLOR_WHITE, config.COLOR_SUCCESS)
         
-        # Grid de sugerencias (2 columnas, 5 filas)
+        # Grid de sugerencias (2 columnas, 5 filas) - ajustado para pantalla vertical
         self.suggestion_buttons = []
         for row in range(5):
             for col in range(2):
-                x = 30 + col * 220 + 50
-                y = 140 + row * 35
-                btn = Button(x, y, 100, 28, "", config.COLOR_SECONDARY, config.COLOR_BUTTON_BG)
+                x = 20 + col * 145
+                y = 170 + row * 45
+                btn = Button(x, y, 130, 35, "", config.COLOR_SECONDARY, config.COLOR_BUTTON_BG)
                 self.suggestion_buttons.append(btn)
         logger.debug(f"GeneratorScreen initialized with {len(self.suggestion_buttons)} suggestion buttons")
     
@@ -76,35 +76,35 @@ class GeneratorScreen(Screen):
         # Fondo
         r.fill(config.COLOR_BACKGROUND)
         
-        # Header
-        r.rect(0, 0, 480, 40, config.COLOR_BLACK, fill=True)
+        # Header (ajustado para 320 de ancho)
+        r.rect(0, 0, 320, 40, config.COLOR_BLACK, fill=True)
         step_text = f"Paso {self.step + 1} de {self.max_steps}"
         r.text_centered(15, step_text, config.COLOR_SECONDARY, scale=1)
         
-        # Barra de progreso
+        # Barra de progreso (ajustada para ancho 320)
         progress = (self.step + 1) / self.max_steps
-        r.progress_bar(90, 28, 300, 6, progress, config.COLOR_BUTTON_BG, config.COLOR_PRIMARY)
+        r.progress_bar(40, 30, 240, 6, progress, config.COLOR_BUTTON_BG, config.COLOR_PRIMARY)
         
         # Prompt del usuario
-        r.text(30, 55, "Quiero hacer un juego de...", config.COLOR_WHITE, scale=1)
+        r.text(20, 55, "Quiero hacer un juego de...", config.COLOR_WHITE, scale=1)
         
-        # Cuadro con texto seleccionado
-        r.rounded_rect(30, 70, 420, 35, 6, config.COLOR_BUTTON_BG, fill=True)
-        r.rounded_rect(30, 70, 420, 35, 6, config.COLOR_PRIMARY, fill=False)
+        # Cuadro con texto seleccionado (ajustado para 320 de ancho)
+        r.rounded_rect(20, 75, 280, 40, 6, config.COLOR_BUTTON_BG, fill=True)
+        r.rounded_rect(20, 75, 280, 40, 6, config.COLOR_PRIMARY, fill=False)
         
         # Texto construido hasta ahora
         full_text = " ".join(self.prompt_parts) if self.prompt_parts else "(selecciona)"
-        r.text(40, 83, full_text[:50], config.COLOR_PRIMARY, scale=1)
+        r.text(30, 90, full_text[:35], config.COLOR_PRIMARY, scale=1)
         
         # Dropdown indicator
-        r.text(440, 83, "v", config.COLOR_SECONDARY)
+        r.text(285, 90, "v", config.COLOR_SECONDARY)
         
         # Título de sugerencias
-        r.text(30, 115, "Selecciona una opcion:", config.COLOR_TEXT_SECONDARY, scale=1)
+        r.text(20, 135, "Selecciona una opcion:", config.COLOR_TEXT_SECONDARY, scale=1)
         
         # Dibuja sugerencias o loading
         if self.loading_suggestions:
-            r.text_centered(200, "Cargando...", config.COLOR_PRIMARY, scale=2)
+            r.text_centered(280, "Cargando...", config.COLOR_PRIMARY, scale=2)
         else:
             for i, btn in enumerate(self.suggestion_buttons):
                 if btn.enabled:

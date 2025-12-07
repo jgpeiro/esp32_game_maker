@@ -32,17 +32,17 @@ I2C_FREQ = 400_000
 I2C_SDA = 18
 I2C_SCL = 19
 
-# ===== Touch Calibración =====
-TOUCH_SWAP_XY = True
-TOUCH_AX = -1.000  # Escala X
-TOUCH_BX = 480     # Offset X
-TOUCH_AY = 0.956   # Escala Y
-TOUCH_BY = 6.533   # Offset Y
+# ===== Touch Calibración (Modo Vertical) =====
+TOUCH_SWAP_XY = False  # En modo vertical, no intercambiamos X e Y
+TOUCH_AX = 0.956   # Escala X (antes era AY)
+TOUCH_BX = 6.533   # Offset X (antes era BY)
+TOUCH_AY = 1.000   # Escala Y (antes era AX)
+TOUCH_BY = 0.000   # Offset Y (antes era BX)
 
-# ===== Display =====
-DISPLAY_WIDTH = 480
-DISPLAY_HEIGHT = 320
-DISPLAY_ROTATION = 1  # 0, 1, 2, 3
+# ===== Display (Modo Vertical) =====
+DISPLAY_WIDTH = 320
+DISPLAY_HEIGHT = 480
+DISPLAY_ROTATION = 0  # 0 para modo vertical
 
 # ===== Colores RGB565 (byte swapped) =====
 COLOR_BLACK = 0x0000
@@ -71,7 +71,7 @@ FRAME_RATE = 30         # FPS
 # ===== Template para Claude =====
 GAME_TEMPLATE = """Tu tarea: crear un juego MicroPython simple.
 
-Hardware: Display 480x320 RGB565, touch capacitivo.
+Hardware: Display 320x480 (vertical/portrait) RGB565, touch capacitivo.
 Primitivas: fill(), rect(), circle(), text(), line(), pixel().
 Colores: BLACK=0x0000, WHITE=0xFFFF, RED=0xF800, GREEN=0x07E0, BLUE=0x001F, CYAN=0x07FF.
 
@@ -108,7 +108,7 @@ Reglas:
 - NO threading/async
 - NO time.sleep()
 - Clase llamada Game
-- Coordenadas validas: x:0-479, y:0-319
+- Coordenadas validas: x:0-319, y:0-479 (pantalla vertical)
 
 Descripcion del juego: {description}
 

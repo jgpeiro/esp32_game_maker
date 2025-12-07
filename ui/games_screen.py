@@ -15,12 +15,12 @@ class GamesScreen(Screen):
         self.games = []
         self.selected_index = 0
         self.scroll_offset = 0
-        self.max_visible = 4
+        self.max_visible = 5  # Más items visibles en pantalla vertical
         
-        # Botones de acción
-        self.play_btn = Button(30, 280, 120, 30, "JUGAR", config.COLOR_WHITE, config.COLOR_SUCCESS)
-        self.back_btn = Button(330, 280, 120, 30, "Atras", config.COLOR_WHITE, config.COLOR_BUTTON_BG)
-        self.delete_btn = Button(180, 280, 120, 30, "Borrar", config.COLOR_ACCENT, config.COLOR_BUTTON_BG)
+        # Botones de acción (ajustados para pantalla vertical 320x480)
+        self.play_btn = Button(20, 420, 80, 35, "JUGAR", config.COLOR_WHITE, config.COLOR_SUCCESS)
+        self.delete_btn = Button(120, 420, 80, 35, "Borrar", config.COLOR_ACCENT, config.COLOR_BUTTON_BG)
+        self.back_btn = Button(220, 420, 80, 35, "Atras", config.COLOR_WHITE, config.COLOR_BUTTON_BG)
         logger.debug("GamesScreen initialized")
     
     def enter(self):
@@ -46,30 +46,30 @@ class GamesScreen(Screen):
         # Fondo
         r.fill(config.COLOR_BACKGROUND)
         
-        # Header
-        r.rect(0, 0, 480, 50, config.COLOR_BLACK, fill=True)
+        # Header (ajustado para 320 de ancho)
+        r.rect(0, 0, 320, 50, config.COLOR_BLACK, fill=True)
         
         # Icono carpeta
-        r.rect(20, 18, 18, 22, config.COLOR_SECONDARY, fill=False)
-        r.line(20, 25, 38, 25, config.COLOR_SECONDARY)
+        r.rect(15, 18, 18, 22, config.COLOR_SECONDARY, fill=False)
+        r.line(15, 25, 33, 25, config.COLOR_SECONDARY)
         
-        r.text(45, 18, "MIS JUEGOS", config.COLOR_WHITE, scale=2)
+        r.text(40, 15, "MIS JUEGOS", config.COLOR_WHITE, scale=2)
         
         # Contador
         count_text = f"{len(self.games)} juegos"
-        r.text_right(460, 20, count_text, config.COLOR_SECONDARY)
+        r.text_right(310, 35, count_text, config.COLOR_SECONDARY)
         
         if not self.games:
             # Sin juegos
-            r.text_centered(120, "No hay juegos", config.COLOR_TEXT_SECONDARY, scale=2)
-            r.text_centered(145, "Crea tu primer juego!", config.COLOR_TEXT_SECONDARY, scale=1)
+            r.text_centered(180, "No hay juegos", config.COLOR_TEXT_SECONDARY, scale=2)
+            r.text_centered(210, "Crea tu primer juego!", config.COLOR_TEXT_SECONDARY, scale=1)
             
             # Solo botón atrás
             self.back_btn.draw(r)
         else:
-            # Lista de juegos
+            # Lista de juegos (ajustada para pantalla vertical)
             y_start = 60
-            item_height = 52
+            item_height = 60
             
             for i in range(self.max_visible):
                 game_index = i + self.scroll_offset
@@ -79,18 +79,18 @@ class GamesScreen(Screen):
                 game = self.games[game_index]
                 y = y_start + i * item_height
                 
-                # Fondo del item
+                # Fondo del item (ajustado para 320 de ancho)
                 if game_index == self.selected_index:
-                    r.rounded_rect(20, y, 440, 45, 6, config.COLOR_BUTTON_BG, fill=True)
-                    r.rounded_rect(20, y, 440, 45, 6, config.COLOR_PRIMARY, fill=False)
+                    r.rounded_rect(15, y, 290, 52, 6, config.COLOR_BUTTON_BG, fill=True)
+                    r.rounded_rect(15, y, 290, 52, 6, config.COLOR_PRIMARY, fill=False)
                     text_color = config.COLOR_WHITE
                 else:
-                    r.rounded_rect(20, y, 440, 45, 6, config.COLOR_BLACK, fill=True)
-                    r.rounded_rect(20, y, 440, 45, 6, 0x4A69, fill=False)
+                    r.rounded_rect(15, y, 290, 52, 6, config.COLOR_BLACK, fill=True)
+                    r.rounded_rect(15, y, 290, 52, 6, 0x4A69, fill=False)
                     text_color = config.COLOR_TEXT_SECONDARY
                 
                 # Icono play
-                cx, cy = 40, y + 22
+                cx, cy = 35, y + 26
                 if game_index == self.selected_index:
                     r.circle(cx, cy, 12, config.COLOR_PRIMARY, fill=True)
                     icon_color = config.COLOR_WHITE
@@ -103,23 +103,24 @@ class GamesScreen(Screen):
                 r.line(cx - 3, cy - 6, cx + 5, cy, icon_color)
                 r.line(cx - 3, cy + 6, cx + 5, cy, icon_color)
                 
-                # Nombre del juego
-                name = game["name"][:30]  # Trunca si es muy largo
-                r.text(62, y + 10, name, text_color, scale=1)
+                # Nombre del juego (ajustado para ancho menor)
+                name = game["name"][:25]  # Trunca si es muy largo
+                r.text(55, y + 10, name, text_color, scale=1)
                 
                 # Fecha
                 date_text = self._format_date(game["created"])
-                r.text(62, y + 26, date_text, 0x8410, scale=1)
+                r.text(55, y + 30, date_text, 0x8410, scale=1)
                 
-                # Veces jugado
-                played_text = f"Jugado {game['played']}x"
-                r.text_right(450, y + 26, played_text, 0x8410, scale=1)
+                # Botón play pequeño
+                if game_index == self.selected_index:
+                    r.circle(285, y + 26, 10, config.COLOR_SECONDARY, fill=True)
+                    r.text(282, y + 22, ">", config.COLOR_WHITE)
             
             # Indicadores de scroll
             if self.scroll_offset > 0:
                 r.text_centered(55, "^", config.COLOR_PRIMARY)
             if self.scroll_offset + self.max_visible < len(self.games):
-                r.text_centered(270, "v", config.COLOR_PRIMARY)
+                r.text_centered(375, "v", config.COLOR_PRIMARY)
             
             # Botones de acción
             self.play_btn.draw(r)
@@ -142,9 +143,9 @@ class GamesScreen(Screen):
                 self.app.change_screen(MenuScreen(self.app))
             return
         
-        # Selección de juegos
-        if 20 <= x <= 460 and 60 <= y <= 268:
-            item_index = (y - 60) // 52
+        # Selección de juegos (ajustado para pantalla vertical)
+        if 15 <= x <= 305 and 60 <= y <= 360:
+            item_index = (y - 60) // 60
             game_index = item_index + self.scroll_offset
             if game_index < len(self.games):
                 self.selected_index = int(game_index)
@@ -180,4 +181,5 @@ class GamesScreen(Screen):
         import time
         t = time.localtime(int(timestamp))
         return f"{t[2]:02d}/{t[1]:02d}/{t[0]} {t[3]:02d}:{t[4]:02d}"
+
 

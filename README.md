@@ -8,7 +8,7 @@ Consola portátil que genera sus propios juegos usando Claude AI.
 ## 📋 Hardware Requerido
 
 - **ESP32-S3** con MicroPython
-- **LCD TFT 480x320** ST7796S (SPI)
+- **LCD TFT 320x480** ST7796S (SPI)
 - **Touch Screen** FT6x36 (I2C)
 - **Conexión WiFi** para API de Claude
 
@@ -27,11 +27,12 @@ game_maker/
 │   ├── menu_screen.py    # Menú principal
 │   ├── generator_screen.py # Generador de ideas
 │   ├── loading_screen.py # Pantalla de carga
-│   ├── games_screen.py   # Explorador de juegos
-│   └── game_runner.py    # Ejecutor de juegos
+│   └── games_screen.py   # Explorador de juegos
+
 ├── core/
 │   ├── app.py           # Controlador principal
 │   ├── claude_api.py    # Cliente API de Claude
+│   ├── game_runner.py   # Ejecutor de juegos
 │   ├── storage.py       # Gestión de archivos
 │   └── renderer.py      # Sistema de renderizado
 └── games/               # Juegos generados (dinámico)
@@ -294,7 +295,7 @@ El sistema envía este template a Claude para generar juegos:
 ```python
 # GAME_TEMPLATE.md
 Hardware disponible:
-- Display: 480x320 pixels, RGB565
+- Display: 320x480 pixels, RGB565
 - Touch: coordenadas (x, y)
 - Framebuffer primitivas: pixel, line, rect, circle, text
 

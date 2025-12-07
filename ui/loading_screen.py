@@ -17,7 +17,7 @@ class LoadingScreen(Screen):
         self.error = False
         self.generating = False
         
-        self.cancel_btn = Button(180, 285, 120, 25, "Cancelar", config.COLOR_ACCENT, config.COLOR_BUTTON_BG)
+        self.cancel_btn = Button(100, 420, 120, 25, "Cancelar", config.COLOR_ACCENT, config.COLOR_BUTTON_BG)
         logger.debug(f"LoadingScreen initialized with description: '{description[:50]}...'")
     
     def enter(self):
@@ -94,36 +94,39 @@ class LoadingScreen(Screen):
         # Fondo
         r.fill(config.COLOR_BACKGROUND)
         
-        # Header
-        r.rect(0, 0, 480, 40, config.COLOR_BLACK, fill=True)
+        # Header (ajustado para 320 de ancho)
+        r.rect(0, 0, 320, 40, config.COLOR_BLACK, fill=True)
         status = "Generando..." if self.generating else ("Error!" if self.error else "Listo!")
         r.text_centered(15, status, config.COLOR_SECONDARY if self.generating else 
                        (config.COLOR_ACCENT if self.error else config.COLOR_SUCCESS), scale=1)
         
-        # Barra progreso completa
-        r.progress_bar(90, 28, 300, 6, 1.0, config.COLOR_BUTTON_BG, config.COLOR_SUCCESS)
+        # Barra progreso completa (ajustada para 320 de ancho)
+        r.progress_bar(40, 30, 240, 6, 1.0, config.COLOR_BUTTON_BG, config.COLOR_SUCCESS)
         
-        # Cuadro con descripción
-        r.rounded_rect(30, 60, 420, 80, 8, config.COLOR_BLACK, fill=True)
-        r.rounded_rect(30, 60, 420, 80, 8, config.COLOR_SECONDARY, fill=False)
+        # Cuadro con descripción (ajustado para pantalla vertical)
+        r.rounded_rect(20, 60, 280, 100, 8, config.COLOR_BLACK, fill=True)
+        r.rounded_rect(20, 60, 280, 100, 8, config.COLOR_SECONDARY, fill=False)
         
-        r.text(40, 70, "Tu juego:", config.COLOR_SECONDARY, scale=1)
+        r.text(30, 70, "Tu juego:", config.COLOR_SECONDARY, scale=1)
         
-        # Divide descripción en líneas
+        # Divide descripción en líneas (ajustado para ancho menor)
         words = self.description.split()
-        line1 = " ".join(words[:8])
-        line2 = " ".join(words[8:16]) if len(words) > 8 else ""
-        line3 = " ".join(words[16:24]) if len(words) > 16 else ""
+        line1 = " ".join(words[:6])
+        line2 = " ".join(words[6:12]) if len(words) > 6 else ""
+        line3 = " ".join(words[12:18]) if len(words) > 12 else ""
+        line4 = " ".join(words[18:24]) if len(words) > 18 else ""
         
-        r.text(40, 90, line1, config.COLOR_WHITE, scale=1)
+        r.text(30, 90, line1, config.COLOR_WHITE, scale=1)
         if line2:
-            r.text(40, 105, line2, config.COLOR_WHITE, scale=1)
+            r.text(30, 105, line2, config.COLOR_WHITE, scale=1)
         if line3:
-            r.text(40, 120, line3, config.COLOR_WHITE, scale=1)
+            r.text(30, 120, line3, config.COLOR_WHITE, scale=1)
+        if line4:
+            r.text(30, 135, line4, config.COLOR_WHITE, scale=1)
         
         if self.generating:
-            # Spinner animado
-            cx, cy = 240, 200
+            # Spinner animado (centrado para pantalla vertical)
+            cx, cy = 160, 250
             
             # Círculo exterior
             r.circle(cx, cy, 35, config.COLOR_BUTTON_BG, fill=False)
@@ -149,25 +152,25 @@ class LoadingScreen(Screen):
                     r.line(x1, y1, x2, y2, config.COLOR_SECONDARY)
             
             # Texto
-            r.text_centered(250, "Claude esta pensando...", config.COLOR_SECONDARY, scale=1)
+            r.text_centered(320, "Claude esta pensando...", config.COLOR_SECONDARY, scale=1)
             
-            # Barra de progreso
-            r.progress_bar(140, 270, 200, 8, self.progress, config.COLOR_BUTTON_BG, config.COLOR_PRIMARY)
+            # Barra de progreso (ajustada para pantalla vertical)
+            r.progress_bar(60, 350, 200, 8, self.progress, config.COLOR_BUTTON_BG, config.COLOR_PRIMARY)
             
             # Puntos animados
             dots = "." * ((self.angle // 60) % 4)
-            r.text_centered(285, dots, config.COLOR_TEXT_SECONDARY, scale=2)
+            r.text_centered(380, dots, config.COLOR_TEXT_SECONDARY, scale=2)
             
             # Botón cancelar
             self.cancel_btn.draw(r)
             
         elif self.error:
-            # Mensaje de error
-            r.text_centered(200, "Error al generar", config.COLOR_ACCENT, scale=2)
-            r.text_centered(225, "Verifica tu conexion", config.COLOR_TEXT_SECONDARY, scale=1)
+            # Mensaje de error (ajustado para pantalla vertical)
+            r.text_centered(250, "Error al generar", config.COLOR_ACCENT, scale=2)
+            r.text_centered(280, "Verifica tu conexion", config.COLOR_TEXT_SECONDARY, scale=1)
             
             # Botón volver
-            btn = Button(170, 260, 140, 30, "Volver", config.COLOR_WHITE, config.COLOR_PRIMARY)
+            btn = Button(90, 350, 140, 30, "Volver", config.COLOR_WHITE, config.COLOR_PRIMARY)
             btn.draw(r)
         
         r.flush()

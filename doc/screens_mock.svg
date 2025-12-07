@@ -1,0 +1,339 @@
+<svg viewBox="0 0 1200 960" xmlns="http://www.w3.org/2000/svg">
+  <!-- Definiciones de gradientes y patrones -->
+  <defs>
+    <!-- Gradiente para el fondo del dispositivo -->
+    <linearGradient id="deviceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2C3E50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#34495E;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradiente para pantallas activas -->
+    <linearGradient id="screenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f0f1e;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradiente botones primarios -->
+    <linearGradient id="primaryBtn" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099cc;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradiente botones secundarios -->
+    <linearGradient id="secondaryBtn" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ee5a6f;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradiente success -->
+    <linearGradient id="successBtn" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4ecdc4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#44a08d;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Patrón de puntos para el fondo -->
+    <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#ffffff" opacity="0.1"/>
+    </pattern>
+  </defs>
+  
+  <!-- FILA 1 - Pantallas superiores -->
+  
+  <!-- PANTALLA 1: SPLASH SCREEN / BOOT -->
+  <g id="screen1">
+    <!-- Marco del dispositivo -->
+    <rect x="10" y="10" width="240" height="360" rx="15" fill="url(#deviceGrad)" stroke="#000" stroke-width="2"/>
+    <!-- Pantalla LCD -->
+    <rect x="25" y="40" width="210" height="315" rx="5" fill="url(#screenGrad)" stroke="#00d4ff" stroke-width="1"/>
+    <rect x="25" y="40" width="210" height="315" rx="5" fill="url(#dots)"/>
+    
+    <!-- Contenido: Logo animado -->
+    <circle cx="130" cy="140" r="50" fill="none" stroke="#00d4ff" stroke-width="3" opacity="0.7"/>
+    <circle cx="130" cy="140" r="40" fill="none" stroke="#4ecdc4" stroke-width="3" opacity="0.8"/>
+    <circle cx="130" cy="140" r="30" fill="none" stroke="#ff6b6b" stroke-width="3" opacity="0.9"/>
+    
+    <!-- Texto central -->
+    <text x="130" y="145" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#00d4ff" text-anchor="middle">GAME</text>
+    <text x="130" y="170" font-family="Arial, sans-serif" font-size="14" fill="#4ecdc4" text-anchor="middle">MAKER</text>
+    
+    <!-- Estrellas decorativas -->
+    <polygon points="50,80 52,86 58,86 53,90 55,96 50,92 45,96 47,90 42,86 48,86" fill="#ffd700" opacity="0.8"/>
+    <polygon points="200,100 202,106 208,106 203,110 205,116 200,112 195,116 197,110 192,106 198,106" fill="#ffd700" opacity="0.6"/>
+    <polygon points="70,250 72,256 78,256 73,260 75,266 70,262 65,266 67,260 62,256 68,256" fill="#ffd700" opacity="0.7"/>
+    
+    <!-- Barra de carga -->
+    <rect x="50" y="280" width="160" height="12" rx="6" fill="#1a1a2e" stroke="#00d4ff" stroke-width="1"/>
+    <rect x="52" y="282" width="120" height="8" rx="4" fill="url(#primaryBtn)"/>
+    
+    <!-- Texto inferior -->
+    <text x="130" y="320" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">Powered by Claude AI</text>
+    <text x="130" y="335" font-family="Arial, sans-serif" font-size="8" fill="#666" text-anchor="middle">v1.0 - ESP32-S3</text>
+    
+    <!-- Etiqueta -->
+    <text x="130" y="390" font-family="Arial, sans-serif" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">1. SPLASH SCREEN</text>
+  </g>
+  
+  <!-- PANTALLA 2: MENU PRINCIPAL -->
+  <g id="screen2">
+    <!-- Marco del dispositivo -->
+    <rect x="270" y="10" width="240" height="360" rx="15" fill="url(#deviceGrad)" stroke="#000" stroke-width="2"/>
+    <!-- Pantalla LCD -->
+    <rect x="285" y="40" width="210" height="315" rx="5" fill="url(#screenGrad)" stroke="#00d4ff" stroke-width="1"/>
+    <rect x="285" y="40" width="210" height="315" rx="5" fill="url(#dots)"/>
+    
+    <!-- Header con icono -->
+    <rect x="285" y="40" width="210" height="45" fill="#1a1a3e"/>
+    <circle cx="310" cy="62" r="12" fill="url(#primaryBtn)"/>
+    <polygon points="310,56 310,68 318,62" fill="#fff"/>
+    <text x="330" y="68" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#fff">MENÚ PRINCIPAL</text>
+    
+    <!-- Opciones del menú -->
+    <!-- Opción 1: Crear Juego -->
+    <rect x="300" y="100" width="180" height="50" rx="8" fill="url(#primaryBtn)" opacity="0.9"/>
+    <circle cx="320" cy="125" r="10" fill="#fff" opacity="0.9"/>
+    <text x="320" y="128" font-family="Arial, sans-serif" font-size="14" fill="#0099cc" text-anchor="middle" font-weight="bold">+</text>
+    <text x="340" y="128" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#fff">CREAR JUEGO</text>
+    
+    <!-- Opción 2: Mis Juegos -->
+    <rect x="300" y="160" width="180" height="50" rx="8" fill="#2a2a4e" stroke="#00d4ff" stroke-width="2"/>
+    <rect x="315" y="178" width="15" height="18" rx="2" fill="none" stroke="#4ecdc4" stroke-width="2"/>
+    <line x1="318" y1="185" x2="327" y2="185" stroke="#4ecdc4" stroke-width="2"/>
+    <line x1="318" y1="190" x2="327" y2="190" stroke="#4ecdc4" stroke-width="1.5"/>
+    <text x="340" y="190" font-family="Arial, sans-serif" font-size="14" fill="#fff">MIS JUEGOS</text>
+    <circle cx="465" cy="185" r="8" fill="#ff6b6b"/>
+    <text x="465" y="188" font-family="Arial, sans-serif" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">5</text>
+    
+    <!-- Opción 3: Ajustes -->
+    <rect x="300" y="220" width="180" height="50" rx="8" fill="#2a2a4e" stroke="#666" stroke-width="2"/>
+    <circle cx="322" cy="245" r="10" fill="none" stroke="#888" stroke-width="2"/>
+    <line x1="322" y1="235" x2="322" y2="240" stroke="#888" stroke-width="2"/>
+    <line x1="322" y1="245" x2="327" y2="245" stroke="#888" stroke-width="2"/>
+    <text x="340" y="250" font-family="Arial, sans-serif" font-size="14" fill="#aaa">AJUSTES</text>
+    
+    <!-- Opción 4: Info -->
+    <rect x="300" y="280" width="180" height="50" rx="8" fill="#2a2a4e" stroke="#666" stroke-width="2"/>
+    <circle cx="322" cy="305" r="10" fill="none" stroke="#888" stroke-width="2"/>
+    <text x="322" y="310" font-family="Arial, sans-serif" font-size="14" fill="#888" text-anchor="middle" font-weight="bold">i</text>
+    <text x="340" y="310" font-family="Arial, sans-serif" font-size="14" fill="#aaa">ACERCA DE</text>
+    
+    <!-- Etiqueta -->
+    <text x="390" y="390" font-family="Arial, sans-serif" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">2. MENÚ PRINCIPAL</text>
+  </g>
+  
+  <!-- PANTALLA 3: GENERADOR DE IDEAS (Palabra 1) -->
+  <g id="screen3">
+    <!-- Marco del dispositivo -->
+    <rect x="530" y="10" width="240" height="360" rx="15" fill="url(#deviceGrad)" stroke="#000" stroke-width="2"/>
+    <!-- Pantalla LCD -->
+    <rect x="545" y="40" width="210" height="315" rx="5" fill="url(#screenGrad)" stroke="#00d4ff" stroke-width="1"/>
+    <rect x="545" y="40" width="210" height="315" rx="5" fill="url(#dots)"/>
+    
+    <!-- Header -->
+    <rect x="545" y="40" width="210" height="40" fill="#1a1a3e"/>
+    <text x="650" y="65" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4ecdc4" text-anchor="middle">Paso 1 de 3</text>
+    
+    <!-- Indicador de progreso -->
+    <rect x="560" y="75" width="180" height="4" rx="2" fill="#2a2a4e"/>
+    <rect x="560" y="75" width="60" height="4" rx="2" fill="url(#primaryBtn)"/>
+    
+    <!-- Prompt del usuario -->
+    <text x="560" y="100" font-family="Arial, sans-serif" font-size="11" fill="#fff" font-weight="bold">Quiero hacer un juego de...</text>
+    
+    <!-- Cuadro de texto con palabra seleccionada -->
+    <rect x="560" y="108" width="170" height="30" rx="6" fill="#2a2a4e" stroke="#00d4ff" stroke-width="2"/>
+    <text x="570" y="128" font-family="Arial, sans-serif" font-size="14" fill="#00d4ff" font-weight="bold">AVENTURA</text>
+    <text x="720" y="128" font-family="Arial, sans-serif" font-size="10" fill="#4ecdc4">▼</text>
+    
+    <!-- Grid de sugerencias (2x5) -->
+    <text x="560" y="155" font-family="Arial, sans-serif" font-size="9" fill="#888">Selecciona una opción:</text>
+    
+    <!-- Fila 1 -->
+    <rect x="560" y="162" width="80" height="28" rx="5" fill="#2a2a4e" stroke="#4ecdc4" stroke-width="1.5"/>
+    <text x="600" y="180" font-family="Arial, sans-serif" font-size="10" fill="#4ecdc4" text-anchor="middle">plataforma</text>
+    
+    <rect x="650" y="162" width="80" height="28" rx="5" fill="#2a2a4e" stroke="#666" stroke-width="1"/>
+    <text x="690" y="180" font-family="Arial, sans-serif" font-size="10" fill="#aaa" text-anchor="middle">carreras</text>
+    
+    <!-- Fila 2 -->
+    <rect x="560" y="195" width="80" height="28" rx="5" fill="#2a2a4e" stroke="#666" stroke-width="1"/>
+    <text x="600" y="213" font-family="Arial, sans-serif" font-size="10" fill="#aaa" text-anchor="middle">puzzles</text>
+    
+    <rect x="650" y="195" width="80" height="28" rx="5" fill="#2a2a4e" stroke="#666" stroke-width="1"/>
+    <text x="690" y="213" font-family="Arial, sans-serif" font-size="10" fill="#aaa" text-anchor="middle">shooter</text>
+    
+    <!-- Fila 3 -->
+    <rect x="560" y="228" width="80" height="28" rx="5" fill="#2a2a4e" stroke="#666" stroke-width="1"/>
+    <text x="600" y="246" font-family="Arial, sans-serif" font-size="10" fill="#aaa" text-anchor="middle">arcade</text>
+    
+    <rect x="650" y="228" width="80" height="28" rx="5" fill="#2a2a4e" stroke="#666" stroke-width="1"/>
+    <text x="690" y="246" font-family="Arial, sans-serif" font-size="10" fill="#aaa" text-anchor="middle">estrategia</text>
+    
+    <!-- Fila 4 -->
+    <rect x="560" y="261" width="80" height="28" rx="5" fill="#2a2a4e" stroke="#666" stroke-width="1"/>
+    <text x="600" y="279" font-family="Arial, sans-serif" font-size="10" fill="#aaa" text-anchor="middle">RPG</text>
+    
+    <rect x="650" y="261" width="80" height="28" rx="5" fill="#2a2a4e" stroke="#666" stroke-width="1"/>
+    <text x="690" y="279" font-family="Arial, sans-serif" font-size="10" fill="#aaa" text-anchor="middle">deportes</text>
+    
+    <!-- Fila 5 -->
+    <rect x="560" y="294" width="80" height="28" rx="5" fill="#2a2a4e" stroke="#666" stroke-width="1"/>
+    <text x="600" y="312" font-family="Arial, sans-serif" font-size="10" fill="#aaa" text-anchor="middle">simulador</text>
+    
+    <rect x="650" y="294" width="80" height="28" rx="5" fill="#2a2a4e" stroke="#666" stroke-width="1"/>
+    <text x="690" y="312" font-family="Arial, sans-serif" font-size="10" fill="#aaa" text-anchor="middle">retro</text>
+    
+    <!-- Botones inferiores -->
+    <rect x="560" y="330" width="70" height="20" rx="5" fill="#3a3a5e"/>
+    <text x="595" y="344" font-family="Arial, sans-serif" font-size="9" fill="#aaa" text-anchor="middle">← Atrás</text>
+    
+    <rect x="660" y="330" width="70" height="20" rx="5" fill="url(#successBtn)"/>
+    <text x="695" y="344" font-family="Arial, sans-serif" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">Siguiente →</text>
+    
+    <!-- Etiqueta -->
+    <text x="650" y="390" font-family="Arial, sans-serif" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">3. GENERADOR (Paso 1)</text>
+  </g>
+  
+  <!-- FILA 2 - Pantallas inferiores -->
+  
+  <!-- PANTALLA 4: GENERADOR DE IDEAS (Generando...) -->
+  <g id="screen4">
+    <!-- Marco del dispositivo -->
+    <rect x="10" y="410" width="240" height="360" rx="15" fill="url(#deviceGrad)" stroke="#000" stroke-width="2"/>
+    <!-- Pantalla LCD -->
+    <rect x="25" y="440" width="210" height="315" rx="5" fill="url(#screenGrad)" stroke="#00d4ff" stroke-width="1"/>
+    <rect x="25" y="440" width="210" height="315" rx="5" fill="url(#dots)"/>
+    
+    <!-- Header -->
+    <rect x="25" y="440" width="210" height="40" fill="#1a1a3e"/>
+    <text x="130" y="465" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4ecdc4" text-anchor="middle">Generando...</text>
+    
+    <!-- Indicador de progreso completo -->
+    <rect x="40" y="475" width="180" height="4" rx="2" fill="#2a2a4e"/>
+    <rect x="40" y="475" width="180" height="4" rx="2" fill="url(#successBtn)"/>
+    
+    <!-- Frase completa del usuario -->
+    <rect x="35" y="495" width="190" height="80" rx="8" fill="#1a1a3e" stroke="#4ecdc4" stroke-width="2"/>
+    <text x="130" y="515" font-family="Arial, sans-serif" font-size="10" fill="#4ecdc4" text-anchor="middle" font-weight="bold">Tu juego:</text>
+    <text x="130" y="535" font-family="Arial, sans-serif" font-size="11" fill="#fff" text-anchor="middle">Quiero hacer un juego de</text>
+    <text x="130" y="550" font-family="Arial, sans-serif" font-size="11" fill="#fff" text-anchor="middle">aventura espacial con</text>
+    <text x="130" y="565" font-family="Arial, sans-serif" font-size="11" fill="#fff" text-anchor="middle">naves y alienígenas</text>
+    
+    <!-- Spinner de carga animado -->
+    <circle cx="130" cy="620" r="30" fill="none" stroke="#2a2a4e" stroke-width="4"/>
+    <circle cx="130" cy="620" r="30" fill="none" stroke="#00d4ff" stroke-width="4" stroke-dasharray="100 50" opacity="0.8"/>
+    <circle cx="130" cy="620" r="22" fill="none" stroke="#4ecdc4" stroke-width="3" stroke-dasharray="70 40" opacity="0.6"/>
+    
+    <!-- Texto de estado -->
+    <text x="130" y="675" font-family="Arial, sans-serif" font-size="11" fill="#4ecdc4" text-anchor="middle" font-weight="bold">🤖 Claude está pensando...</text>
+    
+    <!-- Barra de progreso animada -->
+    <rect x="50" y="690" width="160" height="8" rx="4" fill="#2a2a4e"/>
+    <rect x="52" y="692" width="100" height="4" rx="2" fill="url(#primaryBtn)">
+      <animate attributeName="width" from="0" to="156" dur="3s" repeatCount="indefinite"/>
+    </rect>
+    
+    <!-- Puntos animados -->
+    <text x="130" y="715" font-family="Arial, sans-serif" font-size="14" fill="#888" text-anchor="middle">• • •</text>
+    
+    <!-- Botón cancelar -->
+    <rect x="70" y="730" width="120" height="20" rx="5" fill="#3a3a5e" stroke="#ff6b6b" stroke-width="1"/>
+    <text x="130" y="744" font-family="Arial, sans-serif" font-size="9" fill="#ff6b6b" text-anchor="middle">✕ Cancelar</text>
+    
+    <!-- Etiqueta -->
+    <text x="130" y="790" font-family="Arial, sans-serif" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">4. GENERANDO JUEGO</text>
+  </g>
+  
+  <!-- PANTALLA 5: EXPLORADOR DE ARCHIVOS -->
+  <g id="screen5">
+    <!-- Marco del dispositivo -->
+    <rect x="270" y="410" width="240" height="360" rx="15" fill="url(#deviceGrad)" stroke="#000" stroke-width="2"/>
+    <!-- Pantalla LCD -->
+    <rect x="285" y="440" width="210" height="315" rx="5" fill="url(#screenGrad)" stroke="#00d4ff" stroke-width="1"/>
+    <rect x="285" y="440" width="210" height="315" rx="5" fill="url(#dots)"/>
+    
+    <!-- Header con búsqueda -->
+    <rect x="285" y="440" width="210" height="50" fill="#1a1a3e"/>
+    <rect x="295" y="453" width="15" height="18" rx="2" fill="none" stroke="#4ecdc4" stroke-width="2"/>
+    <line x1="298" y1="460" x2="307" y2="460" stroke="#4ecdc4" stroke-width="2"/>
+    <line x1="298" y1="465" x2="307" y2="465" stroke="#4ecdc4" stroke-width="1.5"/>
+    <text x="318" y="468" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#fff">MIS JUEGOS</text>
+    
+    <!-- Icono búsqueda -->
+    <circle cx="475" cy="463" r="8" fill="none" stroke="#666" stroke-width="1.5"/>
+    <line x1="481" y1="469" x2="486" y2="474" stroke="#666" stroke-width="1.5"/>
+    
+    <!-- Filtros / ordenar -->
+    <text x="295" y="505" font-family="Arial, sans-serif" font-size="8" fill="#888">Ordenar: Reciente ▼</text>
+    <text x="450" y="505" font-family="Arial, sans-serif" font-size="8" fill="#4ecdc4">5 juegos</text>
+    
+    <!-- Lista de juegos -->
+    <!-- Juego 1 - Seleccionado -->
+    <rect x="295" y="515" width="190" height="45" rx="6" fill="#2a2a4e" stroke="#00d4ff" stroke-width="2"/>
+    <circle cx="315" cy="537" r="12" fill="url(#primaryBtn)"/>
+    <polygon points="315,531 315,543 323,537" fill="#fff"/>
+    <text x="335" y="534" font-family="Arial, sans-serif" font-size="11" fill="#fff" font-weight="bold">Space Raiders</text>
+    <text x="335" y="547" font-family="Arial, sans-serif" font-size="8" fill="#888">05/12/2025 - 18:32</text>
+    <circle cx="470" cy="537" r="8" fill="#4ecdc4"/>
+    <text x="470" y="540" font-family="Arial, sans-serif" font-size="8" fill="#fff" text-anchor="middle">▶</text>
+    
+    <!-- Juego 2 -->
+    <rect x="295" y="565" width="190" height="45" rx="6" fill="#1a1a3e" stroke="#444" stroke-width="1"/>
+    <circle cx="315" cy="587" r="12" fill="#3a3a5e"/>
+    <polygon points="315,581 315,593 323,587" fill="#666"/>
+    <text x="335" y="584" font-family="Arial, sans-serif" font-size="11" fill="#ccc">Puzzle Master</text>
+    <text x="335" y="597" font-family="Arial, sans-serif" font-size="8" fill="#666">04/12/2025 - 15:20</text>
+    <circle cx="470" cy="587" r="8" fill="#3a3a5e"/>
+    <text x="470" y="590" font-family="Arial, sans-serif" font-size="8" fill="#888" text-anchor="middle">▶</text>
+    
+    <!-- Juego 3 -->
+    <rect x="295" y="615" width="190" height="45" rx="6" fill="#1a1a3e" stroke="#444" stroke-width="1"/>
+    <circle cx="315" cy="637" r="12" fill="#3a3a5e"/>
+    <polygon points="315,631 315,643 323,637" fill="#666"/>
+    <text x="335" y="634" font-family="Arial, sans-serif" font-size="11" fill="#ccc">Dino Jump</text>
+    <text x="335" y="647" font-family="Arial, sans-serif" font-size="8" fill="#666">03/12/2025 - 12:45</text>
+    <circle cx="470" cy="637" r="8" fill="#3a3a5e"/>
+    <text x="470" y="640" font-family="Arial, sans-serif" font-size="8" fill="#888" text-anchor="middle">▶</text>
+    
+    <!-- Juego 4 -->
+    <rect x="295" y="665" width="190" height="45" rx="6" fill="#1a1a3e" stroke="#444" stroke-width="1"/>
+    <circle cx="315" cy="687" r="12" fill="#3a3a5e"/>
+    <polygon points="315,681 315,693 323,687" fill="#666"/>
+    <text x="335" y="684" font-family="Arial, sans-serif" font-size="11" fill="#ccc">Snake 2.0</text>
+    <text x="335" y="697" font-family="Arial, sans-serif" font-size="8" fill="#666">02/12/2025 - 09:15</text>
+    <circle cx="470" cy="687" r="8" fill="#3a3a5e"/>
+    <text x="470" y="690" font-family="Arial, sans-serif" font-size="8" fill="#888" text-anchor="middle">▶</text>
+    
+    <!-- Botones de acción -->
+    <rect x="295" y="725" width="60" height="22" rx="5" fill="url(#successBtn)"/>
+    <text x="325" y="740" font-family="Arial, sans-serif" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">▶ JUGAR</text>
+    
+    <rect x="365" y="725" width="55" height="22" rx="5" fill="#3a3a5e"/>
+    <text x="392" y="740" font-family="Arial, sans-serif" font-size="9" fill="#aaa" text-anchor="middle">📝 Editar</text>
+    
+    <rect x="430" y="725" width="55" height="22" rx="5" fill="#3a3a5e" stroke="#ff6b6b" stroke-width="1"/>
+    <text x="457" y="740" font-family="Arial, sans-serif" font-size="9" fill="#ff6b6b" text-anchor="middle">🗑 Borrar</text>
+    
+    <!-- Etiqueta -->
+    <text x="390" y="790" font-family="Arial, sans-serif" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">5. EXPLORADOR</text>
+  </g>
+  
+  <!-- PANTALLA 6: JUEGO EN EJECUCIÓN -->
+  <g id="screen6">
+    <!-- Marco del dispositivo -->
+    <rect x="530" y="410" width="240" height="360" rx="15" fill="url(#deviceGrad)" stroke="#000" stroke-width="2"/>
+    <!-- Pantalla LCD -->
+    <rect x="545" y="440" width="210" height="315" rx="5" fill="url(#screenGrad)" stroke="#00d4ff" stroke-width="1"/>
+    
+    <!-- Simulación de juego: Space Raiders -->
+    <!-- Fondo estrellado -->
+    <rect x="545" y="440" width="210" height="315" fill="#000814"/>
+    <circle cx="570" cy="460" r="1" fill="#fff" opacity="0.8"/>
+    <circle cx="620" cy="470" r="1.5" fill="#fff" opacity="0.6"/>
+    <circle cx="680" cy="455" r="1" fill="#fff" opacity="0.9"/>
+    <circle cx="730" cy="480" r="1" fill="#fff" opacity="0.7"/>
+    <circle cx="590" cy="520" r="1.5" fill="#fff" opacity="0.5"/>
+    <circle cx="700" cy="530" r="1" fill="#fff" opacity="0.8"/>
+    <circle cx="650" cy="580" r="1" fill="#fff" opacity="0.6"/>
+    <!-- ... -->
+  </g>
+</svg>
