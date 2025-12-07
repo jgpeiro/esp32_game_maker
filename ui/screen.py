@@ -10,7 +10,7 @@ class Screen:
         self.app = app
         self.renderer = app.renderer
         self.last_touch_time = 0
-        self.touch_debounce = 200  # ms
+        self.touch_debounce = 20  # ms
         logger.debug(f"Screen base initialized: {type(self).__name__}")
     
     def enter(self):

@@ -91,7 +91,21 @@ class Formatter:
     def formatTime(self, datefmt, record):
         if hasattr(time, "strftime"):
             return time.strftime(datefmt, time.localtime(record.ct))
-        return None
+        return self._format_time_fallback()
+
+    def _format_time_fallback(self):
+        """
+        Construye HH:MM:SS.mmm usando ticks_ms() desde boot.
+        No es la hora real del reloj, pero tiene resolución de ms
+        y siempre funciona.
+        """
+        ms = time.ticks_ms()
+        seconds = ms // 1000
+        msec = ms % 1000
+        hh = (seconds // 3600) % 24
+        mm = (seconds // 60) % 60
+        ss = seconds % 60
+        return "%02d:%02d:%02d.%03d" % (hh, mm, ss, msec)
 
     def format(self, record):
         if self.usesTime():
@@ -254,3 +268,4 @@ if hasattr(sys, "atexit"):
 
 
 __version__ = '0.6.2'
+

@@ -133,7 +133,7 @@ class GameRunner(Screen):
         if self.error:
             # Volver al explorador
             logger.info("Returning to GamesScreen after error")
-            from games_screen import GamesScreen
+            from ui.games_screen import GamesScreen # Made local to prevent recursive imports
             self.app.change_screen(GamesScreen(self.app))
             return
         
@@ -146,7 +146,7 @@ class GameRunner(Screen):
             elif 170 <= x <= 270 and 280 <= y <= 315:
                 # Salir
                 logger.info("Exiting game, returning to GamesScreen")
-                from games_screen import GamesScreen
+                from ui.games_screen import GamesScreen # Made local to prevent recursive imports
                 self.app.change_screen(GamesScreen(self.app))
             return
         

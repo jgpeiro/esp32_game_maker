@@ -8,7 +8,10 @@ from hal.ft6x36 import Ft6x36
 from core.app import App
 
 # Configure root logger
-logging.basicConfig(level=config.LOG_LEVEL, format="%(levelname)s:%(name)s:%(message)s")
+logging.basicConfig(
+    level=config.LOG_LEVEL,
+    format="%(asctime)s %(levelname)s:%(name)s:%(message)s",
+)
 logger = logging.getLogger("main")
 
 
@@ -76,3 +79,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

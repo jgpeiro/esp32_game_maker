@@ -66,7 +66,7 @@ class SplashScreen(Screen):
         
         # Texto inferior
         r.text_centered(370, "Powered by Claude AI", config.COLOR_TEXT_SECONDARY)
-        r.text_centered(390, "v1.0 - ESP32-S3", config.COLOR_TEXT_SECONDARY)
+        r.text_centered(390, "v1.0 - ESP32", config.COLOR_TEXT_SECONDARY)
         
         r.flush()
     

@@ -126,8 +126,8 @@ class ClaudeAPI:
         prompt = config.GAME_TEMPLATE.format(description=description)
         
         # Solicita más tokens para el código completo
-        logger.debug("Requesting 4000 tokens for game generation...")
-        response = self._make_request(prompt, max_tokens=4000)
+        logger.debug("Requesting 8000 tokens for game generation...")
+        response = self._make_request(prompt, max_tokens=8000)
         
         if response:
             # Extrae el código entre ```python y ```
