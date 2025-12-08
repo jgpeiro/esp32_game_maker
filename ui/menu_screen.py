@@ -5,6 +5,8 @@ import lib.logging as logging
 from ui.screen import Screen, Button
 from ui.generator_screen import GeneratorScreen
 from ui.games_screen import GamesScreen
+from ui.app_generator_screen import AppGeneratorScreen
+from ui.apps_screen import AppsScreen
 from ui.settings_screen import SettingsScreen
 from ui.about_screen import AboutScreen
     
@@ -15,22 +17,26 @@ class MenuScreen(Screen):
         super().__init__(app)
         logger.debug("Initializing MenuScreen...")
         
-        # Botones del menú (centrados para pantalla 320x480)
+        # Botones del menú (6 botones para pantalla 320x480)
         self.buttons = [
-            Button(70, 100, 180, 50, "CREAR JUEGO", config.COLOR_WHITE, config.COLOR_PRIMARY),
-            Button(70, 160, 180, 50, "MIS JUEGOS", config.COLOR_PRIMARY, config.COLOR_BUTTON_BG),
-            Button(70, 220, 180, 50, "AJUSTES", config.COLOR_TEXT_SECONDARY, config.COLOR_BUTTON_BG),
-            Button(70, 280, 180, 50, "ACERCA DE", config.COLOR_TEXT_SECONDARY, config.COLOR_BUTTON_BG)
+            Button(70, 80, 180, 45, "CREAR JUEGO", config.COLOR_WHITE, config.COLOR_PRIMARY),
+            Button(70, 130, 180, 45, "MIS JUEGOS", config.COLOR_PRIMARY, config.COLOR_BUTTON_BG),
+            Button(70, 185, 180, 45, "CREAR APP", config.COLOR_WHITE, config.COLOR_SUCCESS),
+            Button(70, 235, 180, 45, "MIS APPS", config.COLOR_SUCCESS, config.COLOR_BUTTON_BG),
+            Button(70, 290, 180, 45, "AJUSTES", config.COLOR_TEXT_SECONDARY, config.COLOR_BUTTON_BG),
+            Button(70, 340, 180, 45, "ACERCA DE", config.COLOR_TEXT_SECONDARY, config.COLOR_BUTTON_BG)
         ]
         
         self.game_count = 0
-        logger.debug("MenuScreen initialized with 4 buttons")
+        self.app_count = 0
+        logger.debug("MenuScreen initialized with 6 buttons")
     
     def enter(self):
         logger.info("Entering MenuScreen")
-        # Cuenta juegos disponibles
+        # Cuenta juegos y apps disponibles
         self.game_count = len(self.app.storage.list_games())
-        logger.debug(f"Found {self.game_count} saved games")
+        self.app_count = len(self.app.storage.list_apps())
+        logger.debug(f"Found {self.game_count} saved games and {self.app_count} saved apps")
     
     def draw(self):
         r = self.renderer
@@ -54,29 +60,45 @@ class MenuScreen(Screen):
         for btn in self.buttons:
             btn.draw(r)
         
-        # Badge con contador de juegos (ajustado para nueva posición de botón)
+        # Badge con contador de juegos
         if self.game_count > 0:
-            badge_x, badge_y = 238, 185
+            badge_x, badge_y = 238, 155
             r.circle(badge_x, badge_y, 10, config.COLOR_ACCENT, fill=True)
             count_str = str(self.game_count)
             text_x = badge_x - len(count_str) * 4
             r.text(text_x, badge_y - 4, count_str, config.COLOR_WHITE)
         
-        # Iconos en los botones (posiciones ajustadas)
+        # Badge con contador de apps
+        if self.app_count > 0:
+            badge_x, badge_y = 238, 260
+            r.circle(badge_x, badge_y, 10, config.COLOR_ACCENT, fill=True)
+            count_str = str(self.app_count)
+            text_x = badge_x - len(count_str) * 4
+            r.text(text_x, badge_y - 4, count_str, config.COLOR_WHITE)
+        
+        # Iconos en los botones
         # Icono + en CREAR JUEGO
-        r.circle(88, 125, 10, config.COLOR_WHITE, fill=True)
-        r.text(84, 121, "+", config.COLOR_PRIMARY, scale=1)
+        r.circle(88, 102, 10, config.COLOR_WHITE, fill=True)
+        r.text(84, 98, "+", config.COLOR_PRIMARY, scale=1)
         
         # Icono carpeta en MIS JUEGOS
-        r.rect(88, 178, 15, 18, config.COLOR_PRIMARY, fill=False)
-        r.line(88, 185, 103, 185, config.COLOR_PRIMARY)
+        r.rect(88, 145, 15, 18, config.COLOR_PRIMARY, fill=False)
+        r.line(88, 152, 103, 152, config.COLOR_PRIMARY)
+        
+        # Icono + en CREAR APP
+        r.circle(88, 207, 10, config.COLOR_WHITE, fill=True)
+        r.text(84, 203, "+", config.COLOR_SUCCESS, scale=1)
+        
+        # Icono carpeta en MIS APPS
+        r.rect(88, 250, 15, 18, config.COLOR_SUCCESS, fill=False)
+        r.line(88, 257, 103, 257, config.COLOR_SUCCESS)
         
         # Icono engranaje en AJUSTES
-        r.circle(95, 245, 8, config.COLOR_TEXT_SECONDARY, fill=False)
+        r.circle(95, 312, 8, config.COLOR_TEXT_SECONDARY, fill=False)
         
         # Icono info en ACERCA DE
-        r.circle(95, 305, 8, config.COLOR_TEXT_SECONDARY, fill=False)
-        r.text(92, 301, "i", config.COLOR_TEXT_SECONDARY)
+        r.circle(95, 362, 8, config.COLOR_TEXT_SECONDARY, fill=False)
+        r.text(92, 358, "i", config.COLOR_TEXT_SECONDARY)
         
         r.flush()
     
@@ -89,7 +111,6 @@ class MenuScreen(Screen):
         # Crear juego
         if self.buttons[0].is_touched(x, y):
             logger.info("Button 'CREAR JUEGO' pressed - navigating to GeneratorScreen")
-            
             self.app.change_screen(GeneratorScreen(self.app))
         
         # Mis juegos
@@ -97,13 +118,23 @@ class MenuScreen(Screen):
             logger.info("Button 'MIS JUEGOS' pressed - navigating to GamesScreen")
             self.app.change_screen(GamesScreen(self.app))
         
-        # Ajustes
+        # Crear app
         elif self.buttons[2].is_touched(x, y):
+            logger.info("Button 'CREAR APP' pressed - navigating to AppGeneratorScreen")
+            self.app.change_screen(AppGeneratorScreen(self.app))
+        
+        # Mis apps
+        elif self.buttons[3].is_touched(x, y):
+            logger.info("Button 'MIS APPS' pressed - navigating to AppsScreen")
+            self.app.change_screen(AppsScreen(self.app))
+        
+        # Ajustes
+        elif self.buttons[4].is_touched(x, y):
             logger.info("Button 'AJUSTES' pressed - navigating to SettingsScreen")
             self.app.change_screen(SettingsScreen(self.app))
         
         # Acerca de
-        elif self.buttons[3].is_touched(x, y):
+        elif self.buttons[5].is_touched(x, y):
             logger.info("Button 'ACERCA DE' pressed - navigating to AboutScreen")
             self.app.change_screen(AboutScreen(self.app))
 

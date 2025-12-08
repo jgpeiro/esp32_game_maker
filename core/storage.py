@@ -1,4 +1,4 @@
-# storage.py - Gestión de almacenamiento de juegos
+# storage.py - Gestión de almacenamiento de juegos y aplicaciones
 
 import os
 import ujson as json
@@ -11,39 +11,43 @@ class Storage:
     def __init__(self):
         logger.debug("Initializing Storage...")
         self.games_dir = config.GAMES_DIR
-        self._ensure_directory()
-        self.metadata_file = f"{self.games_dir}/metadata.json"
-        self.metadata = self._load_metadata()
-        logger.info(f"Storage initialized. Games directory: {self.games_dir}, {len(self.metadata)} games in metadata")
+        self.apps_dir = config.APPS_DIR
+        self._ensure_directory(self.games_dir)
+        self._ensure_directory(self.apps_dir)
+        self.games_metadata_file = f"{self.games_dir}/metadata.json"
+        self.apps_metadata_file = f"{self.apps_dir}/metadata.json"
+        self.games_metadata = self._load_metadata(self.games_metadata_file)
+        self.apps_metadata = self._load_metadata(self.apps_metadata_file)
+        logger.info(f"Storage initialized. Games: {len(self.games_metadata)}, Apps: {len(self.apps_metadata)}")
     
-    def _ensure_directory(self):
-        """Crea el directorio de juegos si no existe"""
+    def _ensure_directory(self, dir_path):
+        """Crea el directorio si no existe"""
         try:
-            os.stat(self.games_dir)
-            logger.debug(f"Games directory exists: {self.games_dir}")
+            os.stat(dir_path)
+            logger.debug(f"Directory exists: {dir_path}")
         except OSError:
-            logger.info(f"Creating games directory: {self.games_dir}")
-            os.mkdir(self.games_dir)
+            logger.info(f"Creating directory: {dir_path}")
+            os.mkdir(dir_path)
     
-    def _load_metadata(self):
-        """Carga metadata de los juegos"""
+    def _load_metadata(self, filepath):
+        """Carga metadata desde un archivo"""
         try:
-            with open(self.metadata_file, 'r') as f:
+            with open(filepath, 'r') as f:
                 metadata = json.load(f)
-                logger.debug(f"Loaded metadata: {len(metadata)} entries")
+                logger.debug(f"Loaded metadata from {filepath}: {len(metadata)} entries")
                 return metadata
         except Exception as e:
-            logger.debug(f"No metadata file found or error loading: {e}")
+            logger.debug(f"No metadata file found or error loading {filepath}: {e}")
             return {}
     
-    def _save_metadata(self):
-        """Guarda metadata"""
+    def _save_metadata(self, filepath, metadata):
+        """Guarda metadata en un archivo"""
         try:
-            with open(self.metadata_file, 'w') as f:
-                json.dump(self.metadata, f)
-            logger.debug(f"Metadata saved: {len(self.metadata)} entries")
+            with open(filepath, 'w') as f:
+                json.dump(metadata, f)
+            logger.debug(f"Metadata saved to {filepath}: {len(metadata)} entries")
         except Exception as e:
-            logger.error(f"Error saving metadata: {e}")
+            logger.error(f"Error saving metadata to {filepath}: {e}")
     
     def save_game(self, name, code, description=""):
         """
@@ -60,7 +64,7 @@ class Storage:
         logger.info(f"Saving game: '{name}'")
         try:
             # Sanitiza el nombre para usarlo como archivo
-            filename = self._sanitize_filename(name)
+            filename = self._sanitize_filename(name, self.games_dir)
             filepath = f"{self.games_dir}/{filename}.py"
             logger.debug(f"Sanitized filename: {filename}, path: {filepath}")
             
@@ -72,13 +76,13 @@ class Storage:
             # Actualiza metadata
             import time
             timestamp = time.time()
-            self.metadata[filename] = {
+            self.games_metadata[filename] = {
                 "name": name,
                 "description": description,
                 "created": timestamp,
                 "played": 0
             }
-            self._save_metadata()
+            self._save_metadata(self.games_metadata_file, self.games_metadata)
             
             logger.info(f"Game '{name}' saved successfully as '{filename}'")
             return True
@@ -116,7 +120,7 @@ class Storage:
         """
         logger.debug("Listing all games...")
         games = []
-        for filename, meta in self.metadata.items():
+        for filename, meta in self.games_metadata.items():
             games.append({
                 "filename": filename,
                 "name": meta.get("name", filename),
@@ -146,9 +150,9 @@ class Storage:
             os.remove(filepath)
             logger.debug(f"File removed: {filepath}")
             
-            if filename in self.metadata:
-                del self.metadata[filename]
-                self._save_metadata()
+            if filename in self.games_metadata:
+                del self.games_metadata[filename]
+                self._save_metadata(self.games_metadata_file, self.games_metadata)
                 logger.debug("Metadata updated")
             
             logger.info(f"Game '{filename}' deleted successfully")
@@ -159,13 +163,131 @@ class Storage:
     
     def increment_played(self, filename):
         """Incrementa el contador de veces jugado"""
-        if filename in self.metadata:
-            old_count = self.metadata[filename].get("played", 0)
-            self.metadata[filename]["played"] = old_count + 1
-            self._save_metadata()
+        if filename in self.games_metadata:
+            old_count = self.games_metadata[filename].get("played", 0)
+            self.games_metadata[filename]["played"] = old_count + 1
+            self._save_metadata(self.games_metadata_file, self.games_metadata)
             logger.debug(f"Play count for '{filename}': {old_count} -> {old_count + 1}")
     
-    def _sanitize_filename(self, name):
+    # ===== Métodos para Apps =====
+    
+    def save_app(self, name, code, description=""):
+        """
+        Guarda una aplicación
+        
+        Args:
+            name: Nombre de la app
+            code: Código Python de la app
+            description: Descripción opcional
+        
+        Returns:
+            True si se guardó correctamente
+        """
+        logger.info(f"Saving app: '{name}'")
+        try:
+            filename = self._sanitize_filename(name, self.apps_dir)
+            filepath = f"{self.apps_dir}/{filename}.py"
+            logger.debug(f"Sanitized filename: {filename}, path: {filepath}")
+            
+            with open(filepath, 'w') as f:
+                f.write(code)
+            logger.debug(f"App code written: {len(code)} bytes")
+            
+            import time
+            timestamp = time.time()
+            self.apps_metadata[filename] = {
+                "name": name,
+                "description": description,
+                "created": timestamp,
+                "used": 0
+            }
+            self._save_metadata(self.apps_metadata_file, self.apps_metadata)
+            
+            logger.info(f"App '{name}' saved successfully as '{filename}'")
+            return True
+        except Exception as e:
+            logger.error(f"Error saving app: {e}")
+            return False
+    
+    def load_app(self, filename):
+        """
+        Carga el código de una app
+        
+        Args:
+            filename: Nombre del archivo (sin extensión)
+        
+        Returns:
+            Código de la app o None
+        """
+        logger.info(f"Loading app: {filename}")
+        try:
+            filepath = f"{self.apps_dir}/{filename}.py"
+            with open(filepath, 'r') as f:
+                code = f.read()
+            logger.debug(f"App loaded: {len(code)} bytes")
+            return code
+        except Exception as e:
+            logger.error(f"Error loading app: {e}")
+            return None
+    
+    def list_apps(self):
+        """
+        Lista todas las apps guardadas
+        
+        Returns:
+            Lista de diccionarios con información de cada app
+        """
+        logger.debug("Listing all apps...")
+        apps = []
+        for filename, meta in self.apps_metadata.items():
+            apps.append({
+                "filename": filename,
+                "name": meta.get("name", filename),
+                "description": meta.get("description", ""),
+                "created": meta.get("created", 0),
+                "used": meta.get("used", 0)
+            })
+        
+        apps.sort(key=lambda x: x["created"], reverse=True)
+        logger.debug(f"Found {len(apps)} apps")
+        return apps
+    
+    def delete_app(self, filename):
+        """
+        Elimina una app
+        
+        Args:
+            filename: Nombre del archivo (sin extensión)
+        
+        Returns:
+            True si se eliminó correctamente
+        """
+        logger.info(f"Deleting app: {filename}")
+        try:
+            filepath = f"{self.apps_dir}/{filename}.py"
+            os.remove(filepath)
+            logger.debug(f"File removed: {filepath}")
+            
+            if filename in self.apps_metadata:
+                del self.apps_metadata[filename]
+                self._save_metadata(self.apps_metadata_file, self.apps_metadata)
+                logger.debug("Metadata updated")
+            
+            logger.info(f"App '{filename}' deleted successfully")
+            return True
+        except Exception as e:
+            logger.error(f"Error deleting app: {e}")
+            return False
+    
+    def increment_app_used(self, filename):
+        """Incrementa el contador de veces usada"""
+        if filename in self.apps_metadata:
+            old_count = self.apps_metadata[filename].get("used", 0)
+            self.apps_metadata[filename]["used"] = old_count + 1
+            self._save_metadata(self.apps_metadata_file, self.apps_metadata)
+            logger.debug(f"Use count for app '{filename}': {old_count} -> {old_count + 1}")
+    
+    def _sanitize_filename(self, name, directory):
         """Convierte un nombre en un nombre de archivo válido"""
         # Reemplaza espacios y caracteres especiales
         valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-"
@@ -182,10 +304,7 @@ class Storage:
         # Evita duplicados
         base = filename
         counter = 1
-        #while os.path.exists(f"{self.games_dir}/{filename}.py"):
-        #    filename = f"{base}_{counter}"
-        #    counter += 1
-        existing_files = [f[:-3] for f in os.listdir(self.games_dir) if f.endswith('.py')]
+        existing_files = [f[:-3] for f in os.listdir(directory) if f.endswith('.py')]
         while filename in existing_files:
             filename = f"{base}_{counter}"
             counter += 1        
