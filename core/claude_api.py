@@ -4,19 +4,30 @@ import urequests as requests
 import ujson as json
 import config
 import lib.logging as logging
+from core.settings import Settings
 
 logger = logging.getLogger("claude_api")
 
 class ClaudeAPI:
     def __init__(self):
-        self.api_key = config.CLAUDE_API_KEY
+        self.settings = Settings()
+        # Usar API key de settings si está disponible, sino usar config.py
+        self.api_key = self.settings.api_key if self.settings.api_key else config.CLAUDE_API_KEY
         self.model = config.CLAUDE_MODEL
         self.max_tokens = config.CLAUDE_MAX_TOKENS
         self.endpoint = "https://api.anthropic.com/v1/messages"
         logger.debug(f"ClaudeAPI initialized with model: {self.model}")
     
+    def refresh_api_key(self):
+        """Actualiza el API key desde settings"""
+        self.api_key = self.settings.api_key if self.settings.api_key else config.CLAUDE_API_KEY
+        logger.debug("API key refreshed from settings")
+    
     def _make_request(self, prompt, max_tokens=None):
         """Realiza una petición a la API de Claude"""
+        # Refrescar API key por si cambió
+        self.refresh_api_key()
+        
         logger.debug(f"Making API request with max_tokens={max_tokens or self.max_tokens}")
         headers = {
             "Content-Type": "application/json",
@@ -127,7 +138,7 @@ class ClaudeAPI:
         
         # Solicita más tokens para el código completo
         logger.debug("Requesting 8000 tokens for game generation...")
-        response = self._make_request(prompt, max_tokens=8000)
+        response = self._make_request(prompt, max_tokens=16000)
         
         if response:
             # Extrae el código entre ```python y ```

@@ -5,6 +5,8 @@ import lib.logging as logging
 from ui.screen import Screen, Button
 from ui.generator_screen import GeneratorScreen
 from ui.games_screen import GamesScreen
+from ui.settings_screen import SettingsScreen
+from ui.about_screen import AboutScreen
     
 logger = logging.getLogger("menu_screen")
 
@@ -97,13 +99,11 @@ class MenuScreen(Screen):
         
         # Ajustes
         elif self.buttons[2].is_touched(x, y):
-            logger.info("Button 'AJUSTES' pressed (not implemented)")
-            # TODO: Implementar pantalla de ajustes
-            pass
+            logger.info("Button 'AJUSTES' pressed - navigating to SettingsScreen")
+            self.app.change_screen(SettingsScreen(self.app))
         
         # Acerca de
         elif self.buttons[3].is_touched(x, y):
-            logger.info("Button 'ACERCA DE' pressed (not implemented)")
-            # TODO: Implementar pantalla acerca de
-            pass
+            logger.info("Button 'ACERCA DE' pressed - navigating to AboutScreen")
+            self.app.change_screen(AboutScreen(self.app))
 

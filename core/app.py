@@ -7,6 +7,7 @@ import lib.logging as logging
 from core.renderer import Renderer
 from core.claude_api import ClaudeAPI
 from core.storage import Storage
+from core.settings import Settings
 from ui.splash_screen import SplashScreen
         
 logger = logging.getLogger("app")
@@ -19,6 +20,7 @@ class App:
         self.renderer = Renderer(display)
         self.api = ClaudeAPI()
         self.storage = Storage()
+        self.settings = Settings()
         
         self.current_screen = None
         self.running = True
@@ -29,14 +31,29 @@ class App:
         logger.debug(f"App initialized with target frame time: {self.target_frame_time}ms")
     
     def _connect_wifi(self):
-        """Conecta a WiFi"""
+        """Conecta a WiFi usando la configuración guardada"""
+        # Verificar si WiFi está habilitado en settings
+        if not self.settings.wifi_enabled:
+            logger.info("WiFi disabled in settings, skipping connection")
+            return
+        
         logger.info("Activating WLAN interface...")
         self.wlan.active(True)
         
         if not self.wlan.isconnected():
-            logger.info(f"Connecting to WiFi SSID: {config.WIFI_SSID}...")
+            # Usar credenciales de settings si están disponibles
+            ssid = self.settings.wifi_ssid
+            password = self.settings.wifi_password
             
-            self.wlan.connect(config.WIFI_SSID, config.WIFI_PASSWORD)
+            if not ssid:
+                # Fallback a config.py si no hay credenciales guardadas
+                ssid = config.WIFI_SSID
+                password = config.WIFI_PASSWORD
+                logger.info("Using WiFi credentials from config.py (no saved settings)")
+            
+            logger.info(f"Connecting to WiFi SSID: {ssid}...")
+            
+            self.wlan.connect(ssid, password)
             
             # Espera conexión con timeout
             timeout = config.WIFI_TIMEOUT

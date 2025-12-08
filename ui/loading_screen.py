@@ -6,7 +6,7 @@ import config
 import lib.logging as logging
 # from ui.generator_screen import GeneratorScreen # Made local to prevent recursive import
 from ui.screen import Screen, Button
-# from ui.game_runner import GameRunner # Made local to prevent recursive import
+# from core.game_runner import GameRunner # Made local to prevent recursive import
 
 logger = logging.getLogger("loading_screen")
 
@@ -55,7 +55,7 @@ class LoadingScreen(Screen):
                 if success:
                     logger.info(f"Game saved successfully as '{game_name}'")
                     # Ejecuta el juego
-                    from ui.game_runner import GameRunner # Made local to prevent recursive import
+                    from core.game_runner import GameRunner # Made local to prevent recursive import
                     self.app.change_screen(GameRunner(self.app, game_name))
                 else:
                     logger.error("Failed to save game to storage")
